@@ -1,0 +1,19 @@
+{
+  "name": "puhelinluettelo",
+  "version": "1.0.0",
+  "description": "puhelinluettel-backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Peto8/FullStack_3.git"
+  },
+  "author": "Peter Balogh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Peto8/FullStack_3/issues"
+  },
+  "homepage": "https://github.com/Peto8/FullStack_3#readme"
+}
