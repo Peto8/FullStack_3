@@ -1,10 +1,13 @@
 
+// BACKEND for Puhelinluettelo
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const cors = require('cors')
 
 app.use(bodyParser.json())
+app.use(cors())
 
 //middleware Morgann
 morgan.token('content', req => JSON.stringify(req.body))
@@ -103,8 +106,8 @@ app.get('/info', (req, res) => {
 
 
 
-
-const PORT = 3001
+// Will use port 3001 unless env. Variable PORT is defined
+const PORT = process.env.PORT || 3001
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
   })
