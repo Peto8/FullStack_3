@@ -8,6 +8,7 @@ const cors = require('cors')
 
 app.use(bodyParser.json())
 app.use(cors())
+app.use(express.static('build')) //For express to find /build -path
 
 //middleware Morgann
 morgan.token('content', req => JSON.stringify(req.body))
