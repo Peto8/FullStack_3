@@ -29,8 +29,8 @@ app.get('/', (req, res) => {
 // Gets all persons from mongo DB
 app.get('/api/persons', (req, res) => {
   Person.find({}).then(persons => {
-    res.json({persons})
-  }) 
+    res.json({ persons })
+  })
 })
 
 
@@ -40,19 +40,19 @@ app.get('/api/persons/:id', (req, res, next) => {
       if (person) {
         res.json(person.toJSON())
       } else {
-        res.status(404).end() 
+        res.status(404).end()
       }
     })
     .catch(error => {
-next(error)})
+      next(error)})
 })
 
 
 
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-    .then(result => {res.status(204).end()})
-.catch(error => next(error))
+    .then(() => {res.status(204).end()})
+    .catch(error => next(error))
 })
 
 app.post('/api/persons', (req, res, next) => {
@@ -60,12 +60,12 @@ app.post('/api/persons', (req, res, next) => {
 
   //Check if name or number is missing
   if (!body.name) {
-    return res.status(400).json({ 
-    error: 'name missing' 
-  })
+    return res.status(400).json({
+      error: 'name missing'
+    })
   }else if (!body.number){
-      return res.status(400).json({ 
-      error: 'number missing' 
+    return res.status(400).json({
+      error: 'number missing'
     })
   }
 
@@ -77,10 +77,9 @@ app.post('/api/persons', (req, res, next) => {
   person.save().then(savedPerson => {
     res.json(savedPerson.toJSON())
   }).catch(error => {next(error)})
-}) 
+})
 
 app.put('/api/persons/:id', (req, res, next) => {
-  console.log("UPDATING  A PERSON")
 
   const body = req.body
   const id = req.params.id
@@ -94,7 +93,7 @@ app.put('/api/persons/:id', (req, res, next) => {
     .then(updatedPerson => {
       res.json(updatedPerson)
     }).catch(error => next(error))
-  })
+})
 
 
 
@@ -106,7 +105,7 @@ app.get('/info', (req, res) => {
     const infopage = `<p>Phonebook has info about ${num} people</p>
                     <p>${date}</p>`
     res.send(infopage)
-  })  
+  })
 })
 
 // -- Error Handling --
@@ -119,7 +118,7 @@ app.use(unknownEndpoint)
 const errorHandler = (error, req, res, next) => {
   console.error(error.message)
 
-  if (error.name === 'CastError' && error.kind == 'ObjectId') {
+  if (error.name === 'CastError' && error.kind === 'ObjectId') {
     return res.status(400).send({ error: 'malformatted id' })
 
   } else if (error.name === 'ValidationError') {
@@ -134,6 +133,6 @@ app.use(errorHandler)
 
 // process.env.PORT is now in the .env file
 const PORT = process.env.PORT
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-  })
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
